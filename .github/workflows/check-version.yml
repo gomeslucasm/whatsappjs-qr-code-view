@@ -10,26 +10,16 @@ jobs:
   version-check:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.action == 'opened' || github.event.action == 'synchronize'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    script:
+      - TARGET_BRANCH=$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+      - TARGET_VERSION=$(git show origin/$TARGET_BRANCH:src/package.json | grep '"version"' | cut -d '"' -f 4)
+      - CURRENT_VERSION=$(cat src/package.json | grep '"version"' | cut -d '"' -f 4)
+      - echo "Versão na branch $TARGET_BRANCH: $TARGET_VERSION"
+      - echo "Versão na branch atual: $CURRENT_VERSION"
+      - if [ "$TARGET_VERSION" == "$CURRENT_VERSION" ]; then
+          echo "Erro: Version is equal, change version to publish changes on NPM!";
+          exit 1;
+        else
+          echo "Different versions, changes will be published";
+        fi
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "18"
-
-      - name: Go to path
-        run: cd src
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Check if version changed
-        id: version-check
-        run: |
-          CHANGED=$(git show --name-only --oneline HEAD~1..HEAD package.json)
-          if [[ -z "$CHANGED" ]]; then
-            echo "No changes to package.json. Version must be updated before merging."
-            exit 1
-          fi
