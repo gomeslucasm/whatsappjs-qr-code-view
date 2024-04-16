@@ -2,6 +2,8 @@ const http = require("http");
 const url = require("url");
 const QRCode = require("qrcode");
 
+require("dotenv").config();
+
 const BASE_QR_CODE_URL = "/generate-qr";
 
 const QR_CODE_SERVER_USER = process.env.QR_CODE_SERVER_USER ?? "admin";
