@@ -1,0 +1,42 @@
+name: Publish to NPM on Merge
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  check-version:
+    script:
+      - TARGET_BRANCH=$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+      - TARGET_VERSION=$(git show origin/$TARGET_BRANCH:src/package.json | grep '"version"' | cut -d '"' -f 4)
+      - CURRENT_VERSION=$(cat src/package.json | grep '"version"' | cut -d '"' -f 4)
+      - echo "Versão na branch $TARGET_BRANCH: $TARGET_VERSION"
+      - echo "Versão na branch atual: $CURRENT_VERSION"
+      - if [ "$TARGET_VERSION" == "$CURRENT_VERSION" ]; then
+          echo "Erro: Version is equal, change version to publish changes on NPM!";
+          exit 1;
+        else
+          echo "Different versions, changes will be published";
+        fi
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: version-check
+    if: ${{ needs.version-check.result == 'success' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Go to path
+        run: cd src
+
+      - name: Publish to NPM
+        uses: actions/npm@latest
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
