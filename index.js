@@ -61,7 +61,7 @@ function registerQRCodeRoute(client) {
 
     qrCodeRoutes[route] = qr;
 
-    console.log("REGISTERED ROUTE = ", route);
+    console.log("REGISTERED ROUTE || ", route);
   });
 }
 

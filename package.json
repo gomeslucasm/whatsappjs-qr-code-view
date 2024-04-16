@@ -11,7 +11,6 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "devDependencies": {},
   "description": "This library is a utility for WhatsAppWeb.js that simplifies the process of displaying the WhatsApp QR code on web pages. It provides a straightforward and easy-to-integrate solution for web developers looking to connect their applications with WhatsApp using the WhatsAppWeb.js library.",
   "author": "Lucas Gomes",
   "license": "Apache-2.0",

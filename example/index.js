@@ -1,5 +1,8 @@
 const { Client } = require("whatsapp-web.js");
-const { runQRCodeServer, registerQRCodeRoute } = require("..");
+const {
+  runQRCodeServer,
+  registerQRCodeRoute,
+} = require("whatsappjs-qr-code-view");
 
 function run() {
   const client = new Client();
@@ -8,11 +11,12 @@ function run() {
     console.log("Client is ready!");
   });
 
+  // will register a route for qrcode image when 'qr' event is fired
   registerQRCodeRoute(client);
 
-  // Start your client
   client.initialize();
 
+  // will initialize qrcode image server
   runQRCodeServer();
 }
 
