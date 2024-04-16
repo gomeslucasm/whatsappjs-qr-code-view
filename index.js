@@ -57,7 +57,7 @@ function registerQRCodeRoute(client) {
   client.on("qr", (qr) => {
     let route = BASE_QR_CODE_URL;
 
-    if (!!client?.authStrategy?.id) {
+    if (!!client?.authStrategy?.clientId) {
       route = `${route}/${new String(client.authStrategy.id).match(/\d+/g)}`;
     }
 
