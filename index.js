@@ -2,6 +2,8 @@ const http = require("http");
 const url = require("url");
 const QRCode = require("qrcode");
 
+require("dotenv").config();
+
 const BASE_QR_CODE_URL = "/generate-qr";
 
 const QR_CODE_SERVER_USER = process.env.QR_CODE_SERVER_USER ?? "admin";
@@ -55,8 +57,8 @@ function registerQRCodeRoute(client) {
   client.on("qr", (qr) => {
     let route = BASE_QR_CODE_URL;
 
-    if (!!client?.authStrategy?.id) {
-      route = `${route}/${new String(client.authStrategy.id).match(/\d+/g)}`;
+    if (!!client?.authStrategy?.clientId) {
+      route = `${route}/${new String(client.authStrategy.clientId).match(/\d+/g)}`;
     }
 
     qrCodeRoutes[route] = qr;
