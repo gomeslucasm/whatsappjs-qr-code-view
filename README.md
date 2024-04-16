@@ -1,4 +1,4 @@
-# WhatsappJS QRCode view
+# WhatsappJS QRCode Page
 
 This library is a utility for WhatsAppWeb.js that simplifies the process of displaying the WhatsApp QR code on web pages. It provides a straightforward and easy-to-integrate solution for web developers looking to connect their applications with WhatsApp using the WhatsAppWeb.js library.
 
