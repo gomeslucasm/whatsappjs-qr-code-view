@@ -68,3 +68,7 @@ To customize the settings of the QR code server, you can use the following envir
 - `QR_CODE_SERVER_USER`: Username for the QR code server authentication. Default is "admin".
 - `QR_CODE_SERVER_PASSWORD`: Password for the QR code server authentication. Default is "admin".
 - `QR_CODE_SERVER_PORT`: Port on which the QR code server runs. Default is 3000.
+
+## Support
+
+For support, email lmgomes96@gmail.com or open an issue in the GitHub repository.
