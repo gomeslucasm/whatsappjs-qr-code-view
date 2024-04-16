@@ -28,7 +28,7 @@ jobs:
       - name: Check if version changed
         id: version-check
         run: |
-          CHANGED=$(git diff --name-only HEAD~1 package.json)
+          CHANGED=$(git show --name-only --oneline HEAD~1..HEAD package.json)
           if [[ -z "$CHANGED" ]]; then
             echo "No changes to package.json. Version must be updated before merging."
             exit 1
