@@ -1,0 +1,34 @@
+on:
+  pull_request:
+    branches:
+      - development
+      - master
+    paths:
+      - "src/**"
+
+  version-check:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'opened' || github.event.action == 'synchronize'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Go to path
+        run: cd src
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check if version changed
+        id: version-check
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 package.json)
+          if [[ -z "$CHANGED" ]]; then
+            echo "No changes to package.json. Version must be updated before merging."
+            exit 1
+          fi
